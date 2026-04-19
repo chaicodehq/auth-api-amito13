@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-    "test:win": "set NODE_OPTIONS=--experimental-vm-modules&& jest --runInBand"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test:win": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand"
   },
   "keywords": [
     "authentication",
@@ -21,14 +21,16 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.8.0",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "cross-env": "^10.1.0",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.0",
+    "node": "^25.9.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.0.0",
-    "mongodb-memory-server": "^10.1.0"
+    "mongodb-memory-server": "^10.1.0",
+    "supertest": "^7.0.0"
   }
 }

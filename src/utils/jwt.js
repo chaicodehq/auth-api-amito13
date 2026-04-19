@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import { User } from '../models/user.model';
+import { log } from 'node:console';
 
 /**
  * TODO: Signs a JWT token with the given payload
@@ -29,6 +31,13 @@ import jwt from 'jsonwebtoken';
  */
 export function signToken(payload) {
   // Your code here
+  const secret = process.env.JWT_SECRET;
+  // if (!secret) {  
+  // throw new Error("JWT_SECRET is missing");
+  // }
+  const expiresIn = process.env.JWT_EXPIRES_IN || '24h';
+  log("Signing token with payload:", payload);
+  return jwt.sign(payload, secret, { expiresIn });
 }
 
 /**
@@ -67,4 +76,9 @@ export function signToken(payload) {
  */
 export function verifyToken(token) {
   // Your code here
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET is missing");
+  }
+  return jwt.verify(token, secret);
 }

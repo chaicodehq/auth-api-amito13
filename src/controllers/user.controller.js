@@ -9,6 +9,8 @@ import { User } from '../models/user.model.js';
 export async function listUsers(req, res, next) {
   try {
     // Your code here
+    const users  = await User.find().select('-password')
+    res.status(200).json({users})
   } catch (error) {
     next(error);
   }
@@ -25,6 +27,12 @@ export async function listUsers(req, res, next) {
 export async function getUser(req, res, next) {
   try {
     // Your code here
+    const {id} = req.params
+    const user = await User.findById(id).select('-password')
+    if(!user){
+      return res.status(404).json({error:{message:"user not found"}})
+    }
+    res.status(200).json({user})
   } catch (error) {
     next(error);
   }
@@ -41,6 +49,12 @@ export async function getUser(req, res, next) {
 export async function deleteUser(req, res, next) {
   try {
     // Your code here
+    const {id} = req.params
+    const user = await User.findByIdAndDelete(id)
+    if(!user){
+      return res.status(404).json({error:{message:"user not found"}})
+    }
+    res.status(200).json({message:"user deleted successfully"})
   } catch (error) {
     next(error);
   }

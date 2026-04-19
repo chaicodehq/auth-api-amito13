@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json } from 'express';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import { errorHandler } from './middlewares/error.middleware.js';
@@ -17,5 +17,17 @@ import { notFound } from './middlewares/notFound.middleware.js';
  * 8. Return app
  */
 export function createApp() {
-  // Your code here
+  const app = express()
+  app.use(json())
+
+  app.get('/health',(req,res)=>{
+    return res.json({ok:true})
+  })
+  app.use('/api/auth',authRoutes)
+  app.use('/api/users',userRoutes)
+
+  app.use(notFound)
+  app.use(errorHandler)
+  return app
 }
+
